@@ -57,10 +57,5 @@ def delete(todo_id):
     save_todos(todos)
     return redirect(url_for("index"))
 
-# Add a custom filter for the current year (for the footer)
-@app.template_filter('now')
-def filter_now(format_):
-    return datetime.now().strftime(format_)
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
