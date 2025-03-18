@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Todo App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .todo-item.completed {
+            background-color: #e6ffe6;
+            text-decoration: line-through;
+            color: #666;
+        }
+        .todo-title {
+            flex-grow: 1;
+        }
+        .todo-date {
+            color: #888;
+            font-size: 0.8em;
+            margin-right: 10px;
+        }
+        .btn {
+            padding: 5px 10px;
+            margin-left: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-complete {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-delete {
+            background-color: #f44336;
+            color: white;
+        }
+        .todo-form {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .todo-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .btn-add {
+            background-color: #2196F3;
+            color: white;
+            padding: 10px 15px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Todo App</h1>
+
+    <form class="todo-form" action="/add" method="post">
+        <input type="text" name="title" class="todo-input" placeholder="Add a new task..." required>
+        <button type="submit" class="btn btn-add">Add</button>
+    </form>
+
+    <div class="todo-list">
+        {% if todos %}
+            {% for todo in todos %}
+                <div class="todo-item {% if todo.completed %}completed{% endif %}">
+                    <span class="todo-title">{{ todo.title }}</span>
+                    <span class="todo-date">{{ todo.created_at }}</span>
+                    <a href="/complete/{{ todo.id }}" class="btn btn-complete">
+                        {% if todo.completed %}Undo{% else %}Complete{% endif %}
+                    </a>
+                    <a href="/delete/{{ todo.id }}" class="btn btn-delete">Delete</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No todos yet. Add one above!</p>
+        {% endif %}
+    </div>
+</body>
+</html>
